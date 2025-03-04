@@ -2,9 +2,9 @@ numpy
 matplotlib
 opencv-python
 scipy
-Pillow
 pytest
-mahotas
-jupyter
-scikit-learn
+#Pillow
+#mahotas
+#jupyter
+#scikit-learn
 # scikit-image
