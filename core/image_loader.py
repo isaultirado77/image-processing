@@ -14,8 +14,17 @@ class ImageLoader:
         self._image = None
     
     def load(self):
-        """...""" 
-        pass
+        """
+        Carga la imagen desde la fuente específicada. 
+        : return: Imagen cargada en formato OpenCV (numpy array)
+        """ 
+        if self._is_url(): 
+            self._image = self._load_from_url()
+        else: 
+            self._image = self._load_from_file()
+        
+        if self._image is None: 
+            raise ValueError("The image could not be loaded. Check the path or URL. ")
 
     def _is_url(self):
         """Verifica si la fuente es una URL.""" 
@@ -32,8 +41,11 @@ class ImageLoader:
             return 
         
     def _load_from_file(self):
-        """...""" 
-        pass
+        """Carga una imagen desde un archivo local.""" 
+        if not Path(self._soruce).is_file(): 
+            print("Error: The source file doesn't exists.")
+            return
+        return cv2.imread(self._soruce)
 
 if __name__ == "__main__": 
     parser = argparse.ArgumentParser(description="Carga una imagen desde un archivo o URL.")
