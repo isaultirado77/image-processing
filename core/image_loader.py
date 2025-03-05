@@ -18,13 +18,19 @@ class ImageLoader:
         pass
 
     def _is_url(self):
-        """...""" 
-        pass
+        """Verifica si la fuente es una URL.""" 
+        return self._soruce.startswith("http://") or self._soruce.startswith("https://")
 
     def _load_from_url(self):
-        """...""" 
-        pass
-
+        """Carga una imagen desde una URL."""
+        try: 
+            response = urllib.request.urlopen(self._soruce)
+            image_array = np.asarray(bytearray(response.read(), dtype=np.uint8))
+            return cv2.imdecode(image_array, cv2.IMREAD_COLOR)
+        except Exception as e: 
+            print(f"Error while loading image from URL: {e}")
+            return 
+        
     def _load_from_file(self):
         """...""" 
         pass
