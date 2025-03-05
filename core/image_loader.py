@@ -30,4 +30,13 @@ class ImageLoader:
         pass
 
 if __name__ == "__main__": 
-    pass
+    parser = argparse.ArgumentParser(description="Carga una imagen desde un archivo o URL.")
+    parser.add_argument("-i", "--image", required=True, help="Ruta del archivo o URL de la imagen.")
+    args = vars(parser.parse_args())
+
+    loader = ImageLoader(args["image"])
+    image = loader.load()
+
+    cv2.imshow("Image", image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
