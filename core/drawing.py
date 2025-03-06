@@ -3,9 +3,21 @@ import numpy as np
 
 class Drawing: 
     def __init__(self, width=255, height=255, background=(0, 0, 0)):
-        """..."""
-        self._canvas = np.zeros((height, width, 3), dtype="unit8")
-        self._canvas[:] = background
+        """
+        Inicializa un lienzo en blanco o permite cargar una imagen.
+        :param width: Ancho del lienzo
+        :param height: Alto del lienzo
+        :param background_color: Color de fondo en formato (B, G, R)
+        """
+        self.width = width
+        self.height = height
+        self.background_color = background
+        self.reset_canvas()
+
+    def reset(self): 
+        """Reinicia el lienzo al estado inicial."""
+        self.canvas = np.zeros((self.height, self.width, 3), dtype="uint8")
+        self.canvas[:] = self.background_color
 
     def line(self, start: tuple, end: tuple, color=(255, 255, 255), thickness=1):
         """..."""
