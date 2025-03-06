@@ -1,2 +1,2 @@
 - [X] image loader module 
- - [] test image loader
+ - [ ] test image loader
