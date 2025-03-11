@@ -3,7 +3,7 @@ import argparse
 import cv2
 
 ap = argparse.ArgumentParser()
-ap.add_argument("--i", "--image", required=True, help="Path to the image.")
+ap.add_argument("-i", "--image", required=True, help="Path to the image.")
 args = vars(ap.parse_args())
 
 image = cv2.imread(args["image"])
@@ -20,3 +20,4 @@ dim = (int(image.shape[1] * r), 50)
 
 resized = cv2.resize(image, dim, interpolation=cv2.INTER_AREA)
 cv2.imshow("Resized (Height)", resized)
+cv2.waitKey(0)
