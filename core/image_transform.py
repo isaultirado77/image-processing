@@ -10,4 +10,9 @@ class ImageTransform:
 
     def rotation(self): 
         pass
+
+    def resizing(self): 
+        pass
+
+    
     
