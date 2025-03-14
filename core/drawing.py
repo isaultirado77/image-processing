@@ -7,7 +7,7 @@ class Drawer:
         Inicializa un lienzo en blanco o permite cargar una imagen.
         :param width: Ancho del lienzo
         :param height: Alto del lienzo
-        :param background_color: Color de fondo en formato (B, G, R)
+        :param background: Color de fondo en formato (B, G, R)
         """
         self.width = width
         self.height = height
@@ -19,41 +19,36 @@ class Drawer:
         self.canvas = np.zeros((self.height, self.width, 3), dtype="uint8")
         self.canvas[:] = self.background_color
 
-    def line(self, start: tuple, end: tuple, color=(255, 255, 255), thickness=1):
-        """..."""
-        cv2.line(self._canvas, start, end, color, thickness)
+    def line(self, start, end, color=(255, 255, 255), thickness=1):
+        cv2.line(self.canvas, start, end, color, thickness)
+        return self
 
-    def rectangle(self, top_left: tuple, bottom_right: tuple, color=(255, 255, 255), thickness=1): 
-        """..."""
+    def rectangle(self, top_left, bottom_right, color=(255, 255, 255), thickness=1): 
         cv2.rectangle(self.canvas, top_left, bottom_right, color, thickness)
+        return self
 
-    def circle(self, center: tuple, radius: int, color=(255, 255, 255), thickness=1):
-        """...""" 
-        cv2.circle(center, radius, color, thickness)
+    def circle(self, center, radius, color=(255, 255, 255), thickness=1):
+        cv2.circle(self.canvas, center, radius, color, thickness)
+        return self
 
-    def random_circle(self): 
-        """..."""
-        pass
-
-    def elipse(self): 
-        """..."""
-        pass
-
-    def polygon(self, points: tuple, color=(255, 255, 255), thickness=1): 
-        """..."""
+    def polygon(self, points, color=(255, 255, 255), thickness=1): 
         pts = np.array(points, np.int32).reshape((-1, 1, 2))
-        cv2.polylines(self._canvas, [pts], isClosed=True, color=color, thickness=thickness)
+        cv2.polylines(self.canvas, [pts], isClosed=True, color=color, thickness=thickness)
+        return self
 
-    def text(self, text: str, position: tuple, font_scale=1, color=(255, 255, 255), thickness=2): 
-        """..."""
-        cv2.putText(self._canvas, text, position, cv2.FONT_HERSHEY_PLAIN, font_scale, color, thickness)
+    def text(self, text, position, font_scale=1, color=(255, 255, 255), thickness=2): 
+        cv2.putText(self.canvas, text, position, cv2.FONT_HERSHEY_PLAIN, font_scale, color, thickness)
+        return self
 
     def show(self, name="Drawing"): 
-        """..."""
-        cv2.imshow(mat=self._canvas, winname=name)
-        cv2.imshow(0)
+        cv2.imshow(name, self.canvas)
+        cv2.waitKey(0)
         cv2.destroyAllWindows()
+        return self
 
     def save(self, path="drawing.png"): 
-        """..."""
-        cv2.imwrite(path, self._canvas)
+        cv2.imwrite(path, self.canvas)
+        return self
+    
+    def asarray(self): 
+        return self.canvas
