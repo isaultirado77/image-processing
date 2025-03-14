@@ -11,4 +11,7 @@ loader.load()
 
 image = loader.get_image()
 cv2.imshow("Original", image)
+
+cropped = image[220:400, 100:400]
+cv2.imshow("Cropped", cropped)
 cv2.waitKey(0)

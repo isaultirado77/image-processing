@@ -2,6 +2,7 @@ import urllib.request
 import numpy as np
 import cv2
 from pathlib import Path
+import argparse
 
 class Loader:
     IMAGES_DIR = Path(__file__).resolve().parent.parent / "images"
@@ -43,3 +44,14 @@ class Loader:
     def get_image(self):
         return self._image
 
+if __name__ == "__main__": 
+    parser = argparse.ArgumentParser(description="Carga una imagen desde un archivo o URL.")
+    parser.add_argument("-i", "--image", required=True, help="Ruta del archivo o URL de la imagen.")
+    args = vars(parser.parse_args())
+
+    loader = Loader(args["image"])
+    image = loader.load()
+
+    cv2.imshow("Image", image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()

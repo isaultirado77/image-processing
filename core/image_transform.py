@@ -34,6 +34,9 @@ class ImageTransform:
         
         resized = cv2.resize(self._image, dim, interpolation=inter)
         return resized
+    
+    def cropp(self): 
+        pass
 
 
     
