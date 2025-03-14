@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-class Drawing: 
+class Drawer: 
     def __init__(self, width=255, height=255, background=(0, 0, 0)):
         """
         Inicializa un lienzo en blanco o permite cargar una imagen.
@@ -14,7 +14,7 @@ class Drawing:
         self.background_color = background
         self.reset_canvas()
 
-    def reset(self): 
+    def reset_canvas(self): 
         """Reinicia el lienzo al estado inicial."""
         self.canvas = np.zeros((self.height, self.width, 3), dtype="uint8")
         self.canvas[:] = self.background_color
