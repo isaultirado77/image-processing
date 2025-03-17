@@ -39,6 +39,36 @@ class ImageTransform:
         """Recorta la imagen dentro de las coordenadas especificadas."""
         cropped = self._image[y_start:y_end, x_start:x_end]
         return cropped
+    
+    def add(self, other): 
+        return cv2.add(self._image, other)
 
+    def substract(self, other): 
+        return cv2.subtract(self._image, other)
 
+    def multiply(self, other): 
+        return cv2.multiply(self._image, other)
+
+    def apply_mask(self, mask): 
+        return cv2.bitwise_and(self._image, self._image, mask=mask)
+
+    def split_channles(self): 
+        return cv2.split(self._image)
+
+    def merge_channels(self, channles: list):
+        return cv2.merge(channles)
+    
+    def convert_color_space(self, color_space : str = "GRAY"): 
+        """Convierte la imagen a un espacio de color especificado."""
+        color_spaces = {
+            "GRAY": cv2.COLOR_BGR2GRAY,
+            "HSV": cv2.COLOR_BGR2HSV,
+            "LAB": cv2.COLOR_BGR2LAB,
+            "RGB": cv2.COLOR_BGR2RGB
+        }
+
+        if color_space not in color_space: 
+            raise ValueError(f"Color space not supported. Choose from {color_spaces.values}.")
+        
+        return cv2.cvtColor(self._image, color_spaces[color_space])
     
