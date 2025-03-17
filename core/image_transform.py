@@ -35,8 +35,10 @@ class ImageTransform:
         resized = cv2.resize(self._image, dim, interpolation=inter)
         return resized
     
-    def cropp(self): 
-        pass
+    def cropp(self, x_start: int, y_start: int, x_end: int, y_end: int): 
+        """Recorta la imagen dentro de las coordenadas especificadas."""
+        cropped = self._image[y_start:y_end, x_start:x_end]
+        return cropped
 
 
     
