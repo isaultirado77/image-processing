@@ -1,66 +1,62 @@
 import cv2
 import numpy as np
 
-### 1. Detección de Contornos y Formas ###
-def find_contours():
+### 1. Filtros de Suavizado (Denoising) ###
+def gaussian_blur(): 
     """
     """
     pass
 
-def approximate_contour():
+def median_blur(): 
     """
     """
     pass
 
-def detect_shapes(): 
+def bilateral_filter(): 
     """
     """
     pass
 
+### 2. Filtros de Detección de Bordes ###
+def sobel_edges(): 
+    """
+    Detecta bordes usando operadores Sobel en direcciones X e Y.
+    """
+    pass
 
-### 2. Segmentación ###
-def threshold():
+def canny_edges(): 
+    """
+    """
+    pass
+def laplacian_edges(): 
     """
     """
     pass
 
-def adaptive_threshold():
+### 3. Filtros de Enfoque (Sharpening) ###
+def sharpen(): 
     """
     """
     pass
 
-def watershed_segmentation(): 
-    pass 
-
-### 3. Análisis de Características ###
-def compute_moments(): 
+def unsharp_mask(): 
     """
     """
     pass
 
-def compute_shape_descriptors():
+### 4. Filtros Personalizados ###
+def apply_kernel(): 
     """
     """
     pass
 
-### 4. Detección de Bordes y Esquinas ###
-def detect_edges(): 
+def emboss_filter(): 
     """
     """
     pass
 
-def detect_corners(): 
-    """
-    """
-    pass
-
-### 5. Visualización ###
-def draw_contours(): 
-    """
-    """
-    pass
-
-def draw_corners(): 
+### 5. Filtros Morfológicos ###
+def morphological_operation(): 
     """
     """
     pass
