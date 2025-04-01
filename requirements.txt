@@ -3,8 +3,8 @@ matplotlib
 opencv-python
 scipy
 pytest
-#Pillow
-#mahotas
-#jupyter
-#scikit-learn
+# Pillow
+# mahotas
+# jupyter
+# scikit-learn
 # scikit-image
