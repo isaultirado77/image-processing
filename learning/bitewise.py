@@ -1,8 +1,8 @@
 import numpy as np
 import cv2
-from core import drawing
+from utils import draw_utils
 
-drawer = drawing.Drawer(width=300, height=300)
+drawer = draw_utils.Drawer(width=300, height=300)
 
 drawer.rectangle(top_left=(25, 25), bottom_right=(275, 275), thickness=-1)
 rectangle_img = drawer.canvas.copy()
