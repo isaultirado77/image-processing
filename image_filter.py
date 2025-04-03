@@ -1,10 +1,15 @@
 import cv2
 import numpy as np
+from typing import Tuple, List, Union, Optional
+
 
 ### 1. Filtros de Suavizado (Denoising) ###
 def gaussian_blur(): 
     """
     """
+    pass
+
+def median_blir(): 
     pass
 
 def median_blur(): 

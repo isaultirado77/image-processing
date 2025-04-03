@@ -3,6 +3,7 @@ matplotlib
 opencv-python
 scipy
 pytest
+-e
 # Pillow
 # mahotas
 # jupyter
