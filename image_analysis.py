@@ -134,12 +134,15 @@ def otsu_threshold(image: np.ndarray,
                               type=thresh_type_flag)
     return T, thresh
 
+def traingle_threshold(): 
+    pass
 
 def watershed_segmentation():
     """
     Segmentación basada en watershed.
     """
     pass
+
 
 ### 3. Análisis de Características ###
 def compute_moments(): 

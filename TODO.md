@@ -1,13 +1,43 @@
-- [X] image loader module 
- - [X] test image loader
+- [X] image loader module
+  - [X] test image loader
 
-- [X] drawing module (in prosess)
-- [ ] write function argunments with correct types (
-    image_analysis.py
-    image_enhandcement.py
-    image_filter.py
-    ~~image_loader.py~~
-    ~~image_transform.py~~
-    ~~draw_utils.py~~
-    ~~histogram_utils.py~~
-)
+- [X] drawing module (in progress)
+- [ ] write function arguments with correct types 
+    - image_analysis.py
+    - image_enhancement.py
+    - image_filter.py
+    - ~~image_loader.py~~
+    - ~~image_transform.py~~
+    - ~~draw_utils.py~~
+    - ~~histogram_utils.py~~
+- [ ] image_analysis
+    - watershed_segmentation [ ]
+    - triangle threshold [ ]
+- [ ] image_enhancement
+    - adjust_brightness [ ]
+    - adjust_contrast [ ]
+    - adjust_brightness_contrast [ ]
+    - histogram_equalization [ ]
+    - clahe [ ]
+    - gamma_correction [ ]
+    - sharpen [ ]
+    - auto_contrast [ ]
+- [ ] image_filter
+    - avgerage_blur [ ]
+    - median_blur [ ]
+    - gaussian_blur [ ]
+    - bilateral_filter [ ]
+    - sobel_edges [ ]
+    - canny_edges [ ]
+    - laplacian_edges [ ]
+    - sharpen [ ]
+    - unsharp_mask [ ]
+    - apply_kernel [ ]
+    - emboss_filter [ ]
+    - morphological_operation [ ]
+- [ ] frequency_filter
+    - compute_fft [ ]
+    - apply_fft_filter [ ]
+    - create_ideal_filter [ ]
+    - create_butterworth_filter [ ]
+    - create_gaussian_filter [ ]
