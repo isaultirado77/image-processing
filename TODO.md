@@ -38,7 +38,7 @@
 - [ ] frequency_filter
     - compute_fft [X] (write doc)
     - inv_fft [X] (write doc)
-    - apply_fft_filter [ ] (test para ordenar los channels correctamente)
-    - create_ideal_filter [ ]
+    - apply_fft_filter [X] (test para ordenar los channels correctamente)
+    - create_ideal_filter [X] (write doc)
     - create_butterworth_filter [ ]
     - create_gaussian_filter [ ]
