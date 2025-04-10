@@ -94,14 +94,21 @@ def laplacian_edges(image: np.ndarray,
     return lap
 
 ### 3. Filtros de Enfoque (Sharpening) ###
-def sharpen(): 
+def sharpen(image: np.ndarray, 
+            kernel_size: Tuple[int, int] = (3, 3), 
+            strength: float = 1.0) -> np.ndarray:
     """
+    Aplica filtro de enfoque usando kernel personalizado.
     """
-    pass
+    kernel = np.array([[-1, -1, -1],
+                       [-1, 9*strength, -1],
+                       [-1, -1, -1]])
+    return cv2.filter2D(image, ddepth=-1, kernel=kernel)
 
 def unsharp_mask(): 
     """
     """
+    print("TODO")
     pass
 
 ### 4. Filtros Personalizados ###
@@ -114,12 +121,12 @@ def apply_kernel(image: np.ndarray,
     if normalize:
         kernel = kernel / np.sum(np.abs(kernel))
     
-    return cv2.filter2D(image, -1, kernel)
+    return cv2.filter2D(image, ddepth=-1, kernel=kernel)
 
 def emboss_filter(image: np.ndarray,
                   direction: str = "top-left"): 
     """
-    Aplica efecto de relieve (emboss).
+    Aplica efecto de relieve en dirección vertical (emboss).
     """
     kernels = {
         "top-left": np.array([[-2, -1, 0], [-1, 1, 1], [0, 1, 2]]),
@@ -133,4 +140,5 @@ def emboss_filter(image: np.ndarray,
 def morphological_operation(): 
     """
     """
+    print("TODO")
     pass

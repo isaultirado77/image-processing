@@ -30,7 +30,7 @@
     - sobel_edges [X] (write doc)
     - canny_edges [X] (write doc)
     - laplacian_edges [X] (write doc)
-    - sharpen [ ]
+    - sharpen [X] (write doc)
     - unsharp_mask [ ]
     - apply_kernel [X] (write doc)
     - emboss_filter [X] (write doc)
