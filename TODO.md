@@ -1,8 +1,8 @@
-- [X] image loader module
-  - [X] test image loader
+- [X] ~~image loader module~~
+  - [X] ~~test image loader~~
 
-- [X] drawing module (in progress)
-- [X] write function arguments with correct types 
+- [X] ~~drawing module (in progress)~~
+- [X] ~~write function arguments with correct types ~~
     - ~~image_analysis.py~~
     - ~~image_enhancement.py~~
     - ~~image_filter.py~~
@@ -11,6 +11,8 @@
     - ~~draw_utils.py~~
     - ~~histogram_utils.py~~
 - [ ] image_analysis
+    - find_contours [X]
+    - approximate_contour [X]
     - watershed_segmentation [ ] (opcional)
     - triangle threshold [ ] (opcional)
     - compute_moments [ ]

@@ -1,22 +1,77 @@
 import cv2
 import numpy as np
+from typing import List, Tuple
 
 ### 1. Detección de Contornos y Formas ###
-def find_contours():
+def find_contours(image: np.ndarray,
+                  mode: str = "external",
+                  method: str = "simple") -> List[np.ndarray]:
     """
+    Encuentra los contornos de una imagen binaria.
+    
+    Args:
+    - image: Imagen binaria (np.uint8, valores 0 o 255).
+    - mode: Modo de recuperación de contornos ("external", "list", "tree", "ccomp").
+    - method: Método de aproximación del contorno ("none", "simple", "tc89_l1", "tc89_kcos").
+    
+    Returns:
+    - Lista de contornos encontrados.
+    """
+    mode_map = {
+        "external": cv2.RETR_EXTERNAL,
+        "list": cv2.RETR_LIST,
+        "tree": cv2.RETR_TREE,
+        "ccomp": cv2.RETR_CCOMP
+    }
+
+    method_map = {
+        "none": cv2.CHAIN_APPROX_NONE,
+        "simple": cv2.CHAIN_APPROX_SIMPLE,
+        "tc89_l1": cv2.CHAIN_APPROX_TC89_L1,
+        "tc89_kcos": cv2.CHAIN_APPROX_TC89_KCOS
+    }
+
+    if mode not in mode_map:
+        raise ValueError(f"Modo inválido: {mode}")
+    if method not in method_map:
+        raise ValueError(f"Método inválido: {method}")
+
+    contours, _ = cv2.findContours(image, mode_map[mode], method_map[method])
+    return contours
+
+
+def approximate_contour(contour: np.ndarray, 
+                        epsilon: float = 0.12, 
+                        closed: bool = True) -> np.ndarray:
+    """
+    Aproxima un contorno a una forma más simple con menos puntos. 
+    
+    Args:
+    - contour: Contorno origial (obtenido usando find_contours). 
+    - epsilon: Factor de presición para la aproximación. Se multiplica por el perímetro del contorno.
+               Un valor mayor genera una aproximación más agresiva (menos puntos). 
+    - closed: Indica si el contorno se considera cerrado. 
+    
+    Returns:
+    - Contorno aproximado, reprecentado por un número reducido de vértices. 
+    """
+    perimeter = cv2.arcLength(contour, closed)  # Calcula la longitud del perímetro de un contorno
+    approx = cv2.approxPolyDP(contour, epsilon * perimeter, closed)  # Aploca el algoritmo de Dpugñas-Peucker para simplificar el contorno
+    return approx
+
+def detect_shapes(image: np.ndarray, 
+                  min_area: float = 100) -> List[Tuple[str, np.ndarray]]: 
+    """
+    Detecta formas geométricas básicas en una imagen binaria. 
+
+    Args:
+        image: Imagen binaria de entrada
+        min_area: Área mínima para considerar una forma
+    
+    Returns:
+        Lista de tuplas (nombre_forma, contorno)
     """
     pass
-
-def approximate_contour():
-    """
-    """
-    pass
-
-def detect_shapes(): 
-    """
-    """
-    pass
-
 
 ### 2. Segmentación ###
 def simple_threshold(image: np.ndarray,
@@ -26,7 +81,7 @@ def simple_threshold(image: np.ndarray,
     """
     Aplica umbralización a una imagen en escala de grises.
 
-    Params: 
+    Args: 
     - image (np.ndarray): Imagen de entrada, debe ser en escala de grises.
     - threshold_value (int): Valor de umbral.
     - max_value (int): Valor máximo a asignar cuando se cumpla la condición.
@@ -64,7 +119,7 @@ def adaptive_threshold(image: np.ndarray,
     """
     Aplica umbralización adaptativa para imágenes con iluminación no uniforme.
 
-    Params:
+    Args:
     - image (np.ndarray): Imagen de entrada en escala de grises.
     - max_value (int): Valor que se asigna si la condición se cumple (normalmente 255).
     - method (str): Método de cálculo del umbral local ('mean' o 'gaussian').
@@ -109,7 +164,7 @@ def otsu_threshold(image: np.ndarray,
     """
     Aplica Otsu's Thresholding a una imagen en escala de grises.
 
-    Params:
+    Args:
         image: Imagen de entrada (debe estar en escala de grises).
         max_value: Valor asignado a los píxeles que cumplen la condición.
         threshold_type: Tipo de umbralización ('binary' o 'binary_inv').
