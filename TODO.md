@@ -2,10 +2,10 @@
   - [X] test image loader
 
 - [X] drawing module (in progress)
-- [ ] write function arguments with correct types 
-    - image_analysis.py
-    - image_enhancement.py
-    - image_filter.py
+- [X] write function arguments with correct types 
+    - ~~image_analysis.py~~
+    - ~~image_enhancement.py~~
+    - ~~image_filter.py~~
     - ~~image_loader.py~~
     - ~~image_transform.py~~
     - ~~draw_utils.py~~
@@ -23,17 +23,17 @@
     - sharpen [ ]
     - auto_contrast [ ]
 - [ ] image_filter
-    - avgerage_blur [ ]
-    - median_blur [ ]
-    - gaussian_blur [ ]
-    - bilateral_filter [ ]
-    - sobel_edges [ ]
-    - canny_edges [ ]
-    - laplacian_edges [ ]
+    - avgerage_blur [X]
+    - median_blur [X]
+    - gaussian_blur [X]
+    - bilateral_filter [X]
+    - sobel_edges [X] (write doc)
+    - canny_edges [X] (write doc)
+    - laplacian_edges [X] (write doc)
     - sharpen [ ]
     - unsharp_mask [ ]
-    - apply_kernel [ ]
-    - emboss_filter [ ]
+    - apply_kernel [X] (write doc)
+    - emboss_filter [X] (write doc)
     - morphological_operation [ ]
 - [ ] frequency_filter
     - compute_fft [ ]
