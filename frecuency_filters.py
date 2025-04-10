@@ -22,8 +22,24 @@ def inverse_fft(fft: np.ndarray) -> np.ndarray:
     img_reconstructed = np.real(img_reconstructed)  # Tomar solo la parte real
     return img_reconstructed.astype(np.float32)
 
-def apply_fft_filter():
-    pass
+def apply_fft_filter(image: np.ndarray, mask: np.ndarray) -> np.ndarray:
+    """
+    Aplica un foltro en el dominio de las frecuencias usando una máscara. 
+    """
+    if len(image) == 3:  # Aplica filtrado en cada canal
+        channels = cv2.split(image)
+        filtered_channels = []
+        for ch in channels: 
+            fft = compute_fft(ch)
+            filtered = fft * mask
+            im_back = inverse_fft(filtered)
+            filtered_channels.append(im_back)
+            return cv2.merge(filtered_channels)  # test para ordenar los channels correctamente
+    else: 
+        fft = compute_fft(image)
+        filtered = fft * mask
+        im_back = inverse_fft(filtered)
+        return im_back  # tested: working
 
 def create_ideal_filter():
     pass

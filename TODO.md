@@ -36,8 +36,9 @@
     - emboss_filter [X] (write doc)
     - morphological_operation [ ]
 - [ ] frequency_filter
-    - compute_fft [ ]
-    - apply_fft_filter [ ]
+    - compute_fft [X] (write doc)
+    - inv_fft [X] (write doc)
+    - apply_fft_filter [ ] (test para ordenar los channels correctamente)
     - create_ideal_filter [ ]
     - create_butterworth_filter [ ]
     - create_gaussian_filter [ ]

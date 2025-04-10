@@ -141,6 +141,7 @@ def watershed_segmentation():
     """
     Segmentación basada en watershed.
     """
+    print()
     pass
 
 
