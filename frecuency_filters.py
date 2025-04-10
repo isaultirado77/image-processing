@@ -74,4 +74,11 @@ def create_gaussian_filter(shape: Tuple[int, int],
                            sigma: float, 
                            high_pass: bool = False) -> np.ndarray:
     """Crea un filtro gaussiano. """
-    pass
+    rows, cols = shape
+    crow, ccol = rows // 2, cols // 2  # centros del mask
+    x = np.arange(cols) - ccol
+    y = np.arange(rows) -crow
+    xx, yy = np.meshgrid(x, y)  # Grid con centro en el centro de la imagen
+    d = np.sqrt(xx**2 + y**2)  # distancia radial desde cada punto al centro (frecuencia cero)
+    mask = np.exp(-(d**2)/(2*(sigma**2)))
+    return 1 - mask if high_pass else mask

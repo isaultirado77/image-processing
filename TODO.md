@@ -11,8 +11,15 @@
     - ~~draw_utils.py~~
     - ~~histogram_utils.py~~
 - [ ] image_analysis
-    - watershed_segmentation [ ]
-    - triangle threshold [ ]
+    - watershed_segmentation [ ] (opcional)
+    - triangle threshold [ ] (opcional)
+    - compute_moments [ ]
+    - compute_shape_descriptors [ ] (opcional)
+    - detect_edges [ ]
+    - detect_corners [ ]
+    - draw_contours [ ]
+    - draw_corners []
+
 - [ ] image_enhancement
     - adjust_brightness [ ]
     - adjust_contrast [ ]
@@ -22,7 +29,7 @@
     - gamma_correction [ ]
     - sharpen [ ]
     - auto_contrast [ ]
-- [ ] image_filter
+- [X] ~~image_filter~~
     - avgerage_blur [X]
     - median_blur [X]
     - gaussian_blur [X]
@@ -31,14 +38,14 @@
     - canny_edges [X] (write doc)
     - laplacian_edges [X] (write doc)
     - sharpen [X] (write doc)
-    - unsharp_mask [ ]
+    - unsharp_mask [ ] (opcional)
     - apply_kernel [X] (write doc)
     - emboss_filter [X] (write doc)
-    - morphological_operation [ ]
-- [ ] frequency_filter
+    - morphological_operation [ ]  (opcional)
+- [X] ~~frequency_filter~~
     - compute_fft [X] (write doc)
     - inv_fft [X] (write doc)
     - apply_fft_filter [X] (test para ordenar los channels correctamente)
     - create_ideal_filter [X] (write doc)
-    - create_butterworth_filter [ ]
-    - create_gaussian_filter [ ]
+    - create_butterworth_filter [X] (write doc)
+    - create_gaussian_filter [X] (write doc)
