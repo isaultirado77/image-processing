@@ -1,0 +1,289 @@
+===== __init__.py =====
+
+===== config.py =====
+
+===== draw_utils.py =====
+import cv2
+import numpy as np
+from typing import List, Tuple
+
+
+def create_canvas(width: int = 255, 
+                height: int = 255, 
+                background: Tuple[int, int, int] = (0, 0, 0)) -> np.ndarray:
+    """Crea un nuevo lienzo con fondo personalizado."""
+    canvas = np.zeros((height, width, 3), dtype="uint8")
+    canvas[:] = background
+    return canvas
+
+def draw_line(canvas: np.ndarray, 
+              start: Tuple[int, int], 
+              end: Tuple[int, int], 
+              color: Tuple[int, int, int] = (255, 255, 255), 
+              thickness: int = 1) -> np.ndarray:
+    cv2.line(canvas, start, end, color, thickness)
+    return canvas
+
+def draw_rectangle(canvas: np.ndarray,
+                   top_left: Tuple[int, int],
+                   bottom_right: Tuple[int, int],
+                   color: Tuple[int, int, int] = (255, 255, 255),
+                   thickness: int = 1) -> np.ndarray:
+    cv2.rectangle(canvas, top_left, bottom_right, color, thickness)
+    return canvas
+
+def draw_circle(canvas: np.ndarray,
+                center: Tuple[int, int],
+                radius: int,
+                color: Tuple[int, int, int] = (255, 255, 255), 
+                thickness: int = 1) -> np.ndarray:
+    cv2.circle(canvas, center, radius, color, thickness)
+    return canvas
+
+def draw_polygon(canvas: np.ndarray,
+                points: List[Tuple[int, int]], 
+                color: Tuple[int, int, int] = (255, 255, 255),
+                thickness: int = 1) -> np.ndarray:
+    pts = np.array(points, np.int32).reshape((-1, 1, 2))
+    cv2.polylines(canvas, [pts], isClosed=True, color=color, thickness=thickness)
+    return canvas
+
+def draw_text(canvas: np.ndarray,
+              text: str, position: Tuple[int, int],
+              font_scale: float = 1,
+              color: Tuple[int, int, int] = (255, 255, 255),
+              thickness: int = 2) -> np.ndarray:
+    cv2.putText(canvas, text, position, cv2.FONT_HERSHEY_PLAIN, font_scale, color, thickness)
+    return canvas
+
+def draw_arrow(canvas: np.ndarray,
+               start: Tuple[int, int],
+               end: Tuple[int, int],
+               color: Tuple[int, int, int] = (255, 255, 255),
+               thickness: int = 1,
+               tip_length: float = 0.1) -> np.ndarray:
+    """Dibuja una flecha (útil para visualizar flujo óptico o direcciones)."""
+    cv2.arrowedLine(canvas, start, end, color, thickness, tipLength=tip_length)
+    return canvas
+
+def draw_ellipse(canvas: np.ndarray,
+                 center: Tuple[int, int],
+                 axes: Tuple[int, int],
+                 angle: float,
+                 color: Tuple[int, int, int] = (255, 255, 255),
+                 thickness: int = 1) -> np.ndarray:
+    """Dibuja una elipse con rotación personalizada."""
+    cv2.ellipse(canvas, center, axes, angle, 0, 360, color, thickness)
+    return canvas
+
+def add_grid(canvas: np.ndarray,
+             spacing: int = 50,
+             color: Tuple[int, int, int] = (100, 100, 100),
+             thickness: int = 1) -> np.ndarray:
+    """Añade una cuadrícula al canvas (útil para calibrar o debuggear)."""
+    h, w = canvas.shape[:2]
+    for x in range(0, w, spacing):
+        cv2.line(canvas, (x, 0), (x, h), color, thickness)
+    for y in range(0, h, spacing):
+        cv2.line(canvas, (0, y), (w, y), color, thickness)
+    return canvas
+
+def blend_with_canvas(canvas: np.ndarray,
+                      image: np.ndarray,
+                      alpha: float = 0.5,
+                      x: int = 0, 
+                      y: int = 0) -> np.ndarray:
+    """Superpone una imagen sobre el canvas con transparencia."""
+    overlay = canvas.copy()
+    h, w = image.shape[:2]
+    overlay[y:y+h, x:x+w] = cv2.addWeighted(overlay[y:y+h, x:x+w], alpha, image, 1-alpha, 0)
+    return overlay
+
+def random_shapes(canvas: np.ndarray,
+                  count: int = 5,
+                  max_size: int = 50) -> np.ndarray:
+    """Genera figuras aleatorias para testing/demos."""
+    for _ in range(count):
+        color = tuple(np.random.randint(0, 255, 3).tolist())
+        pt1 = (np.random.randint(0, canvas.shape[1]), np.random.randint(0, canvas.shape[0]))
+        pt2 = (pt1[0] + np.random.randint(10, max_size), pt1[1] + np.random.randint(10, max_size))
+        cv2.rectangle(canvas, pt1, pt2, color, -1)
+    return canvas
+
+
+===== histogram_utils.py =====
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+from typing import Union, List, Tuple, Optional
+
+### 1. Cálculo de Histogramas ###
+def compute_histogram(image: np.ndarray, 
+                     mask: Optional[np.ndarray] = None, 
+                     bins: int = 256, 
+                     range: Tuple[float, float] = (0, 256)) -> np.ndarray:
+    """
+    Calcula el histograma de una imagen (escala de grises o color).
+    """
+    if len(image.shape) == 3:  # Imagen color
+        channels = cv2.split(image)
+        histograms = []
+        for i, ch in enumerate(channels):
+            hist = cv2.calcHist([ch], [0], mask, [bins], range)
+            histograms.append(hist)
+        return histograms
+    else:  # Escala de grises
+        return cv2.calcHist([image], [0], mask, [bins], range)
+
+def compute_cumulative_histogram(hist: np.ndarray) -> np.ndarray:
+    """
+    Calcula el histograma acumulativo.
+    """
+    cum_hist = hist.cumsum()
+    return cum_hist / cum_hist[-1]  # Normalización
+
+### 2. Visualización ###
+def plot_histogram(hist: Union[np.ndarray, List[np.ndarray]], 
+                  title: str = "Histograma", 
+                  colors: Tuple[str] = ('b', 'g', 'r'), 
+                  cumulative: bool = False,
+                  ax: Optional[plt.Axes] = None) -> None:
+    """
+    Visualiza uno o más histogramas usando Matplotlib.
+    """
+    if ax is None:
+        fig, ax = plt.subplots(figsize=(10, 5))
+    
+    if isinstance(hist, list):  # Múltiples canales
+        for h, color in zip(hist, colors):
+            h = h.flatten()
+            if cumulative:
+                h = compute_cumulative_histogram(h)
+            ax.plot(h, color=color)
+    else:  # Un solo canal
+        h = hist.flatten()
+        if cumulative:
+            h = compute_cumulative_histogram(h)
+        ax.plot(h, color='gray')
+    
+    ax.set_title(title)
+    ax.set_xlim([0, 256])
+    ax.grid(True, linestyle='--', alpha=0.7)
+
+def plot_histogram_3d(image: np.ndarray, 
+                     bins: int = 256,
+                     title: str = "Histograma 3D de Color") -> None:
+    """
+    Visualiza histograma 3D para imágenes color (BGR).
+    """
+    from mpl_toolkits.mplot3d import Axes3D
+    
+    # Preparar datos
+    pixels = image.reshape((-1, 3))
+    b, g, r = pixels[:, 0], pixels[:, 1], pixels[:, 2]
+    
+    # Crear figura 3D
+    fig = plt.figure(figsize=(12, 8))
+    ax = fig.add_subplot(111, projection='3d')
+    
+    # Scatter plot 
+    ax.scatter(b, g, r, c=pixels/255.0, marker='.', s=1, alpha=0.1)
+    
+    # Configuración
+    ax.set_xlabel('Canal Azul')
+    ax.set_ylabel('Canal Verde')
+    ax.set_zlabel('Canal Rojo')
+    ax.set_title(title)
+    plt.tight_layout()
+
+### 3. Operaciones con Histogramas ###
+def normalize_histogram(hist: np.ndarray) -> np.ndarray:
+    """
+    Normaliza un histograma a [0, 1].
+    """
+    return hist / hist.sum()
+
+def compare_histograms(hist1: np.ndarray, 
+                      hist2: np.ndarray, 
+                      method: str = 'correlation') -> float:
+    """
+    Compara dos histogramas usando métricas de OpenCV.
+    """
+    methods = {
+        'correlation': cv2.HISTCMP_CORREL,
+        'chisqr': cv2.HISTCMP_CHISQR,
+        'intersect': cv2.HISTCMP_INTERSECT,
+        'bhattacharyya': cv2.HISTCMP_BHATTACHARYYA
+    }
+    return cv2.compareHist(hist1, hist2, methods[method.lower()])
+
+def histogram_matching(source: np.ndarray, 
+                      reference: np.ndarray) -> np.ndarray:
+    """
+    Ajusta el histograma de una imagen para que coincida con una referencia.
+    """
+    # Calcular histogramas acumulativos
+    src_hist = compute_cumulative_histogram(compute_histogram(source))
+    ref_hist = compute_cumulative_histogram(compute_histogram(reference))
+    
+    # Mapeo de intensidades
+    lut = np.interp(src_hist.flatten(), ref_hist.flatten(), np.arange(256))
+    
+    # Aplicar LUT
+    return cv2.LUT(source, lut.astype('uint8'))
+
+### 4. Herramientas Avanzadas ###
+def get_histogram_stats(hist: np.ndarray) -> dict:
+    """
+    Calcula estadísticas descriptivas de un histograma.
+    """
+    bins = np.arange(256)
+    mean = np.sum(bins * hist.flatten())
+    variance = np.sum((bins - mean)**2 * hist.flatten())
+    
+    return {
+        'mean': mean,
+        'median': np.argmax(np.cumsum(hist) >= 0.5),
+        'std': np.sqrt(variance),
+        'entropy': -np.sum(hist * np.log2(hist + 1e-10))  # Evitar log(0)
+    }
+
+def plot_histogram_comparison(image1: np.ndarray, 
+                             image2: np.ndarray, 
+                             titles: Tuple[str] = ('Imagen 1', 'Imagen 2')) -> None:
+    """
+    Compara visualmente histogramas de dos imágenes con subplots.
+    """
+    fig, axes = plt.subplots(2, 2, figsize=(15, 10))
+    
+    # Imágenes
+    axes[0, 0].imshow(cv2.cvtColor(image1, cv2.COLOR_BGR2RGB))
+    axes[0, 0].set_title(titles[0])
+    axes[0, 0].axis('off')
+    
+    axes[0, 1].imshow(cv2.cvtColor(image2, cv2.COLOR_BGR2RGB))
+    axes[0, 1].set_title(titles[1])
+    axes[0, 1].axis('off')
+    
+    # Histogramas
+    if len(image1.shape) == 3:
+        hist1 = compute_histogram(image1)
+        plot_histogram(hist1, ax=axes[1, 0], cumulative=False)
+    else:
+        hist1 = compute_histogram(image1)
+        plot_histogram(hist1, ax=axes[1, 0], colors=('gray',), cumulative=False)
+    
+    if len(image2.shape) == 3:
+        hist2 = compute_histogram(image2)
+        plot_histogram(hist2, ax=axes[1, 1], cumulative=False)
+    else:
+        hist2 = compute_histogram(image2)
+        plot_histogram(hist2, ax=axes[1, 1], colors=('gray',), cumulative=False)
+    
+    plt.tight_layout()
+
+
+===== plot_utils.py =====
+
+===== utils.py =====
+
