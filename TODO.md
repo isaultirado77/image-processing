@@ -11,7 +11,7 @@
     - ~~image_transform.py~~
     - ~~draw_utils.py~~
     - ~~histogram_utils.py~~
-- [ ] image_analysis
+- [X] ~~image_analysis~~
     - find_contours [X]
     - approximate_contour [X]
     - detect_shapes [X]
@@ -19,10 +19,10 @@
     - triangle threshold [ ] (opcional)
     - compute_moments [X]
     - compute_shape_descriptors [X] ~~(opcional)~~
-    - detect_edges [ ]
-    - detect_corners [ ]
+    - detect_edges [X]
+    - detect_corners [X]
     - draw_contours [X]
-    - draw_corners []
+    - draw_corners [X]
 
 - [ ] image_enhancement
     - adjust_brightness [ ]

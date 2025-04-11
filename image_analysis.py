@@ -276,15 +276,59 @@ def compute_shape_descriptors(contour: np.ndarray) -> dict:
     }
 
 ### 4. Detección de Bordes y Esquinas ###
-def detect_edges(): 
+def detect_edges(image: np.ndarray, 
+                 method: str = 'canny', 
+                 low_tresh: int = 50, 
+                 upper_thresh: int = 150) -> np.ndarray: 
     """
-    """
-    pass
+    Detecta bordes en una imagen. 
 
-def detect_corners(): 
+    Args:
+        image: Imagen de entrada (escala de grises)
+        method: "canny" o "sobel"
+        low_thresh: Umbral inferior para Canny
+        high_thresh: Umbral superior para Canny
+    
+    Returns:
+        Imagen binaria con bordes
     """
+
+    if len(image.shape) == 3:  # Convertir la imagen a escala de grises si es necesario
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+    if method == 'canny':  # https://en.wikipedia.org/wiki/Canny_edge_detector
+        return cv2.Canny(image, threshold1=low_tresh, threshold2=upper_thresh)
+    elif method == 'sobbel':  # https://en.wikipedia.org/wiki/Sobel_operator
+        sobelX = cv2.Sobel(image, cv2.CV_64F, 1, 0, ksize=3)
+        sobelY = cv2.Sobel(image, cv2.CV_64F, 0, 1, ksize=3)
+        
+        magnitude = np.sqrt(sobelX**2 + sobelY**2)# Calcular el gradiente total (magnitud)
+        magnitude = np.uint8(np.clip(magnitude / magnitude.max() * 255, 0, 255)) # Normalizar la magnitud y convertir a uint8
+        return magnitude
+    else:
+        raise ValueError(f"Invalid method: {method} Choose 'canny' or 'sobel'.")
+    
+# Docs: 
+# https://docs.opencv.org/4.x/d4/d8c/tutorial_py_shi_tomasi.html
+# https://medium.com/pixel-wise/detect-those-corners-aba0f034078b
+def detect_corners(image: np.ndarray,
+                   max_corners: int = 100, 
+                   quality: float = 0.01, 
+                   min_dist: float = 10.0) -> np.ndarray: 
     """
-    pass
+    Detecta esquinas usando el algoritmo de Shi-Tomasi. 
+    
+    Args:
+        image: Imagen de entrada (escala de grises)
+        max_corners: Número máximo de esquinas a detectar
+        quality: Calidad mínima (0-1)
+        min_dist: Distancia mínima entre esquinas
+    
+    Returns:
+        Array de coordenadas de esquinas [[x1,y1], [x2,y2], ...]
+    """
+    corners = cv2.goodFeaturesToTrack(image, max_corners, quality, min_dist)
+    return corners if corners is not None else np.array([])
 
 ### 5. Visualización ###
 def draw_contours(image: np.ndarray,
@@ -307,7 +351,23 @@ def draw_contours(image: np.ndarray,
     cv2.drawContours(canvas, conturs, -1, color, thickness)
     return canvas
 
-def draw_corners(): 
+def draw_corners(image: np.ndarray, 
+                corners: np.ndarray, 
+                color: Tuple[int, int, int] = (0, 0, 255), 
+                radius: int = 5) -> np.ndarray:
     """
+    Dibuja esquinas detectadas en la imagen.
+    
+    Args:
+        image: Imagen de entrada
+        corners: Array de coordenadas de esquinas
+        color: Color BGR para las esquinas
+        radius: Radio de los círculos
+    
+    Returns:
+        Imagen con esquinas marcadas
     """
-    pass
+    canvas = image.copy()
+    for (x, y) in corners:
+        cv2.circle(canvas, (x, y), radius, color, -1)
+    return canvas
