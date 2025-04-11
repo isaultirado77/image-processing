@@ -14,13 +14,14 @@
 - [ ] image_analysis
     - find_contours [X]
     - approximate_contour [X]
+    - detect_shapes [X]
     - watershed_segmentation [ ] (opcional)
     - triangle threshold [ ] (opcional)
-    - compute_moments [ ]
-    - compute_shape_descriptors [ ] (opcional)
+    - compute_moments [X]
+    - compute_shape_descriptors [X] ~~(opcional)~~
     - detect_edges [ ]
     - detect_corners [ ]
-    - draw_contours [ ]
+    - draw_contours [X]
     - draw_corners []
 
 - [ ] image_enhancement

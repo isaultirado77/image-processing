@@ -225,16 +225,55 @@ def watershed_segmentation():
     pass
 
 
-### 3. Análisis de Características ###
-def compute_moments(): 
+### 3. Análisis de Características ###  
+# Dosc:
+# https://docs.opencv.org/4.x/dd/d49/tutorial_py_contour_features.html
+# https://vincmazet.github.io/bip/mm/measure.html#:~:text=Solidity%20is%20the%20ratio%20of,the%20compactness%20of%20the%20object.
+def compute_moments(contour: np.ndarray) -> dict: 
     """
-    """
-    pass
+    Calcula los momentos de un contorno y el centro geométrico (centroide) del contorno. 
 
-def compute_shape_descriptors():
+    Returns: 
+        Diccionario con momentos (m00, m01, ...) y centroide
     """
+    M = cv2.moments(contour)
+    if M['m00'] != 0: 
+        cx = int(M['m10'] / M['m00'])
+        cy = int(M['m01'] / M['m00'])
+    else: 
+        cx, cy = 0, 0
+        return {"moments": M, "centroid": (cx, cy)}
+
+
+def compute_shape_descriptors(contour: np.ndarray) -> dict:
     """
-    pass
+    Calcula descriptores de forma para un contorno. 
+    """
+    area = cv2.contourArea(contour)
+    perimeter = cv2.arcLength(contour, True)  # Asumimos que el contorno es cerrado
+
+    # Circularlity/Roundness  https://en.wikipedia.org/wiki/Roundness
+    circularity = 0
+    if perimeter > 0: 
+        circularity = (4 * np.pi * area) / (perimeter ** 2)
+    
+    # Aspect ratio https://en.wikipedia.org/wiki/Aspect_ratio_(image)
+    _, _, w, h = cv2.boundingRect(contour)
+    aspect_ratio = float(w) / h if h != 0 else 0
+    
+    # Solidity  
+    hull = cv2.convexHull(contour)  # Convex hull (optimization): Smallest convex polygon that encloses all the points. 
+    # Convex hull in image processing: Is a technique for outlining the shape of an object region. 
+    hull_area = cv2.contourArea(hull)  
+    solidity = float(area) / hull_area if hull_area != 0 else 0
+
+    return {
+        "area": area,
+        "perimeter": perimeter,
+        "circularity": circularity,
+        "aspect_ratio": aspect_ratio,
+        "solidity": solidity
+    }
 
 ### 4. Detección de Bordes y Esquinas ###
 def detect_edges(): 
@@ -248,10 +287,25 @@ def detect_corners():
     pass
 
 ### 5. Visualización ###
-def draw_contours(): 
+def draw_contours(image: np.ndarray,
+                  conturs: List[np.ndarray], 
+                  color: Tuple[int, int, int] = (0, 255, 0), 
+                  thickness: int = 2) -> np.ndarray: 
     """
+    Dibuja TODOS los contornos en una copia de la imagen. 
+    
+    Args:
+        image: Imagen de entrada
+        contours: Lista de contornos
+        color: Color BGR para los contornos
+        thickness: Grosor de línea
+    
+    Returns:
+        Imagen con contornos dibujados
     """
-    pass
+    canvas = image.copy()
+    cv2.drawContours(canvas, conturs, -1, color, thickness)
+    return canvas
 
 def draw_corners(): 
     """
