@@ -1,3 +1,4 @@
+- [ ] Use 'Args' instead of 'Params' on the documentation. 
 - [X] ~~image loader module~~
   - [X] ~~test image loader~~
 

@@ -71,7 +71,33 @@ def detect_shapes(image: np.ndarray,
     Returns:
         Lista de tuplas (nombre_forma, contorno)
     """
-    pass
+    contours = find_contours(image)
+    shapes = []
+
+    for cnt in contours: 
+        area = cv2.contourArea(cnt)
+        if area < min_area: 
+            continue
+
+        approx = approximate_contour(cnt)
+        vertices = len(approx)
+
+        if vertices == 3:
+            shape = "triangle"
+        elif vertices == 4:
+            x, y, w, h = cv2.boundingRect(approx)
+            aspect_ratio = w / float(h)
+            shape = "square" if 0.95 <= aspect_ratio <= 1.05 else "rectangle"
+        elif vertices == 5:
+            shape = "pentagon"
+        elif vertices >= 6:
+            shape = "circle"
+        else:
+            shape = "unknown"
+        
+        shapes.append((shape, cnt))
+
+    return shapes
 
 ### 2. Segmentación ###
 def simple_threshold(image: np.ndarray,
