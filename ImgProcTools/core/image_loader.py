@@ -21,7 +21,7 @@ def load_from_url(url: str) -> np.ndarray:
             image_array = np.asarray(bytearray(response.read()), dtype=np.uint8)
             return cv2.imdecode(image_array, cv2.IMREAD_COLOR)
     except Exception as e:
-        raise ValueError(f"Error loading image from URL: {e}") from None
+        raise ValueError(f"Error loading image from URL: {e}")
 
 def load_from_file(filename: str, base_dir=Optional[Union[str, Path]]) -> np.ndarray:
     base_dir = base_dir or Path.cwd()

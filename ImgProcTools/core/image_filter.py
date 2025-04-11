@@ -8,6 +8,7 @@ def avgerage_blur(image: np.ndarray,
                   kernel_size: Tuple[int, int] = (5, 5)) -> np.ndarray: 
     """
     Aplica filtro de promedio.
+
     Args:
         image: Imagen de entrada
         kernel_size: Tamaño del kernel (ancho, alto) - deben ser impares
@@ -30,6 +31,7 @@ def gaussian_blur(image: np.ndarray,
                   sigma: float = 0) -> np.ndarray: 
     """
     Aplica filtro Gaussiano para suavizado y reducción de ruido.
+    
     Args:
         image: Imagen de entrada
         kernel_size: Tamaño del kernel (ancho, alto) - deben ser impares
@@ -43,6 +45,7 @@ def bilateral_filter(image: np.ndarray,
                      sigma_space: float = 75) -> np.ndarray: 
     """
     Filtro bilateral que preserva bordes mientras reduce ruido.
+    
     Args:
         image: Imagen de entrada
         d: Diámetro del vecindario (tamaño del filtro)
@@ -139,5 +142,4 @@ def emboss_filter(image: np.ndarray,
 def morphological_operation(): 
     """
     """
-    print("TODO")
     pass

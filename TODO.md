@@ -1,4 +1,7 @@
-- [ ] Use 'Args' instead of 'Params' on the documentation. 
+- [ ] Write readme
+- [ ] Implement examples
+- [ ] Check for documentation
+- [X] Use 'Args' instead of 'Params' on the documentation. 
 - [X] ~~image loader module~~
   - [X] ~~test image loader~~
 
