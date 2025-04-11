@@ -81,11 +81,56 @@ def clahe(image: np.ndarray,
         clahe = cv2.createCLAHE(clipLimit=clip_limit, tileGridSize=grid_size)
         return clahe.apply(image)
 
-def gamma_correction():
-    pass
+# https://docs.opencv.org/3.4/d3/dc1/tutorial_basic_linear_transform.html
+def gamma_correction(image: np.ndarray, gamma: float = 1.0) -> np.ndarray:
+    """
+    Corrección gamma para ajustar no linealmente la luminosidad. 
+    Args: 
+        image: Imagen de entrada. 
+        gamma: Valor gamma (y < 0 oscurece y > 0 aclara). 
+               Rango típico: [0.5, 2.5]
+    
+    Returns: 
+        Imagen con corrección gamma aplicada. 
+    """
+    if gamma <= 0:
+        raise ValueError("Gamma must be greater than 0") 
+    inv_gamma = 1.0 / gamma
+    # formula para aplicar corrección gamma: output = 255 * (input / 255)**gamma
+    # al usar LUT la formula cambia: LUT[i] = (i / 255)**(1/gamma) * 255
+    table = np.array([((i / 255.0) ** inv_gamma) * 255 for i in np.arange(0, 256)]).astype("uint8")
+    return cv2.LUT(image, table)  # LUT: https://docs.opencv.org/4.x/d2/de8/group__core__array.html#gab55b8d062b7f5587720ede032d34156f
 
-def sharpen():
-    pass
 
-def auto_contrast():
-    pass
+def auto_contrast(image: np.ndarray, cutoff: float = 0.5) -> np.ndarray:
+    """
+    Ajuste automático de contraste basado en histograma.
+    
+    Args:
+        image: Imagen de entrada.
+        cutoff: Porcentaje de píxeles a recortar en los extremos del histograma (0-1).
+    
+    Returns:
+        Imagen con contraste optimizado.
+    """
+    if len(image.shape) == 3:
+        # Procesar cada canal por separado para imágenes a color
+        channels = cv2.split(image)
+        equalized = [auto_contrast_channel(ch, cutoff) for ch in channels]
+        return cv2.merge(equalized)
+    else:
+        return auto_contrast_channel(image, cutoff)
+
+def auto_contrast_channel(channel: np.ndarray, cutoff: float) -> np.ndarray:
+    """Función auxiliar para auto_contrast (procesa un solo canal)."""
+    # Calcular límites de recorte basados en el histograma
+    hist = cv2.calcHist([channel], [0], None, [256], [0, 256])
+    cdf = hist.cumsum()
+    total = cdf[-1]
+    low = np.searchsorted(cdf, cutoff * total)
+    high = np.searchsorted(cdf, (1 - cutoff) * total)
+    
+    # Aplicar estiramiento lineal del histograma
+    channel = np.clip(channel, low, high)
+    channel = ((channel - low) / (high - low) * 255).astype(np.uint8)
+    return channel

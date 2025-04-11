@@ -24,15 +24,15 @@
     - draw_contours [X]
     - draw_corners [X]
 
-- [ ] image_enhancement
-    - adjust_brightness [ ]
-    - adjust_contrast [ ]
-    - adjust_brightness_contrast [ ]
-    - histogram_equalization [ ]
-    - clahe [ ]
-    - gamma_correction [ ]
-    - sharpen [ ]
-    - auto_contrast [ ]
+- [X] image_enhancement
+    - adjust_brightness [X]
+    - adjust_contrast [X]
+    - adjust_brightness_contrast [X]
+    - histogram_equalization [X]
+    - clahe [X]
+    - gamma_correction [X]
+    - ~~sharpen [ ]~~  (Already implemented on image_filter.py)
+    - auto_contrast [X]  (Test for multiple channels. )
 - [X] ~~image_filter~~
     - avgerage_blur [X]
     - median_blur [X]

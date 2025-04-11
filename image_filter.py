@@ -108,7 +108,6 @@ def sharpen(image: np.ndarray,
 def unsharp_mask(): 
     """
     """
-    print("TODO")
     pass
 
 ### 4. Filtros Personalizados ###
