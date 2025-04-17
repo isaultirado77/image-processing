@@ -48,7 +48,7 @@ from .image_filter import (
     laplacian_edges, 
     sharpen, 
     apply_kernel, 
-    emboss_filter
+    emboss_filter, 
 )
 
 from .image_analysis import (
@@ -64,6 +64,16 @@ from .image_analysis import (
     detect_corners, 
     draw_contours, 
     draw_corners
+)
+
+from .frecuency_filters import (
+    apply_fft_filter, 
+    compute_fft, 
+    create_butterworth_filter, 
+    create_gaussian_filter, 
+    create_ideal_filter, 
+    ideal_high_pass_filter, 
+    ideal_low_pass_filter
 )
 
 # Lista de todas las funciones exportadas
@@ -116,4 +126,13 @@ __all__ = [
     'detect_corners',
     'draw_contours',
     'draw_corners'
+
+    # frecuency_filters.py
+    'apply_fft_filter', 
+    'compute_fft', 
+    'create_butterworth_filter', 
+    'create_gaussian_filter', 
+    'create_ideal_filter', 
+    'ideal_high_pass_filter', 
+    'ideal_low_pass_filter'
 ]

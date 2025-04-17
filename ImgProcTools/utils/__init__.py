@@ -40,12 +40,11 @@ from .draw_utils import (
     add_grid, 
     blend_with_canvas, 
     random_shapes,
-    draw_bounding_box,
-    draw_orientation_line
 )
 
 from .plot_utils import (
-    side_by_side
+    side_by_side, 
+    show_image
 )
 
 # Lista de todas las funciones exportadas
@@ -78,9 +77,8 @@ __all__ = [
     'add_grid',
     'blend_with_canvas',
     'random_shapes',
-    'draw_bounding_box',
-    'draw_orientation_line',
     
     # plot_utils.py
-    'side_by_side'
+    'side_by_side', 
+    'show_image'
 ]

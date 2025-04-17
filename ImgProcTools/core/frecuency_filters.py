@@ -24,7 +24,7 @@ def inverse_fft(fft: np.ndarray) -> np.ndarray:
 
 def apply_fft_filter(image: np.ndarray, mask: np.ndarray) -> np.ndarray:
     """
-    Aplica un foltro en el dominio de las frecuencias usando una máscara. 
+    Aplica un filtro en el dominio de las frecuencias usando una máscara. 
     """
     if len(image) == 3:  # Aplica filtrado en cada canal
         channels = cv2.split(image)
@@ -53,6 +53,14 @@ def create_ideal_filter(shape: Tuple[int, int],
     cv2.circle(img=mask, center=center, radius=radius, color=1, thickness=-1)
     # mask = draw_circle(mask, center, radius, color=1, thickness=-1)  # test 
     return 1 - mask if high_pass else mask
+
+def ideal_low_pass_filter(shape: Tuple[int, int], radius: int) -> np.ndarray:
+    """Crea un filtro ideal pasa-bajas."""
+    return create_ideal_filter(shape, radius, high_pass=False)
+
+def ideal_high_pass_filter(shape: Tuple[int, int], radius: int) -> np.ndarray:
+    """Crea un filtro ideal pasa-altas."""
+    return create_ideal_filter(shape, radius, high_pass=True)
 
 def create_butterworth_filter(shape: Tuple[int, int],
                               radius: int, 

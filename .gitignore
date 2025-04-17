@@ -1,2 +1,4 @@
-virt_imp/
-ImgProcTools.egg-info/
+virt_imp
+bibliography
+.pytest_cache
+__pycache__

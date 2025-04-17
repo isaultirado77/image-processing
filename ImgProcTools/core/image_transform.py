@@ -8,7 +8,8 @@ def translate(image: np.ndarray, x: float, y: float) -> np.ndarray:
     M = np.float32([[1, 0, x], [0, 1, y]])
     return cv2.warpAffine(image, M, (image.shape[1], image.shape[0]))
 
-def rotate(image: np.ndarray, angle: float,
+def rotate(image: np.ndarray,
+           angle: float,
            center: Tuple[int, int] = (152, 152),
            scale: float = 1.0) -> np.ndarray:
     """Rota una imagen alrededor de un centro con un ángulo y escala especificados."""
@@ -39,7 +40,6 @@ def convert_color(image: np.ndarray, color_space: str = "GRAY") -> np.ndarray:
         "LAB": cv2.COLOR_BGR2LAB,
         "RGB": cv2.COLOR_BGR2RGB
     }
-    
     if color_space not in conversions:
         raise ValueError(f"Color space must be one of {list(conversions.keys())}")
     

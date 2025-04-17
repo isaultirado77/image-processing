@@ -5,12 +5,16 @@ from pathlib import Path
 from typing import Union, Optional
 
 def load_image(source: str,
-               base_dir: Optional[Union[str, Path]] = None) -> np.ndarray:
+               base_dir: Optional[Union[str, Path]] = None, 
+               as_gray: bool = False) -> np.ndarray:
     """Carga una imagen desde archivo o URL."""
     if is_url(source):
-        return load_from_url(source)
+        image = load_from_url(source)
     else:
-        return load_from_file(source, base_dir)
+        image = load_from_file(source, base_dir)
+    if as_gray: 
+        return cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    return image
 
 def is_url(source: str) -> np.ndarray:
     return source.startswith(("http://", "https://"))

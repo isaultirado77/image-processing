@@ -1,5 +1,7 @@
 - [ ] Write readme
 - [ ] Implement examples
+    - [ ] basic usage
+    - [ ] watershed segmentation
 - [X] ~~Check for documentation~~
 - [X] Use 'Args' instead of 'Params' on the documentation. 
 - [X] ~~image loader module~~
@@ -58,13 +60,16 @@
     - create_gaussian_filter [X] (write doc)
 
 git commit -m "
-changed: 
 implemented: 
+    - examples: 
+    - [X] basic_usage
+        - [X] load_image
+        - [X] frecuency_filters
+        - [X] image_enhancement
+        - [X] image_transform
+    - [X] frecuency filters: ideal_low_pass_filter, ideal_high_pass_filter, ideal_custom_filter
     - utils module: 
-        - __init__.py
-        - utils: print_image_info, scale_image
-        - plot_utils: side_by_side 
-        - histogram_utils: plot_histogram_with_stats
-    - core module
-        - __init__.py
+        - utils: 
+        - plot_utils: plot_image 
+        - histogram_utils: 
 "
