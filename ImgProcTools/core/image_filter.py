@@ -108,11 +108,6 @@ def sharpen(image: np.ndarray,
                        [-1, -1, -1]])
     return cv2.filter2D(image, ddepth=-1, kernel=kernel)
 
-def unsharp_mask(): 
-    """
-    """
-    pass
-
 ### 4. Filtros Personalizados ###
 def apply_kernel(image: np.ndarray,
                  kernel: np.ndarray, 
@@ -137,9 +132,3 @@ def emboss_filter(image: np.ndarray,
     }
     kernel = kernels.get(direction, kernels["top-left"])
     return apply_kernel(image, kernel)
-
-### 5. Filtros Morfológicos ###
-def morphological_operation(): 
-    """
-    """
-    pass

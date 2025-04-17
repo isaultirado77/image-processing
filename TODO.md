@@ -1,6 +1,6 @@
 - [ ] Write readme
 - [ ] Implement examples
-- [ ] Check for documentation
+- [X] ~~Check for documentation~~
 - [X] Use 'Args' instead of 'Params' on the documentation. 
 - [X] ~~image loader module~~
   - [X] ~~test image loader~~
@@ -56,3 +56,15 @@
     - create_ideal_filter [X] (write doc)
     - create_butterworth_filter [X] (write doc)
     - create_gaussian_filter [X] (write doc)
+
+git commit -m "
+changed: 
+implemented: 
+    - utils module: 
+        - __init__.py
+        - utils: print_image_info, scale_image
+        - plot_utils: side_by_side 
+        - histogram_utils: plot_histogram_with_stats
+    - core module
+        - __init__.py
+"

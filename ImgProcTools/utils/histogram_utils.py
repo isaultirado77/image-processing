@@ -101,6 +101,8 @@ def compare_histograms(hist1: np.ndarray,
         'intersect': cv2.HISTCMP_INTERSECT,
         'bhattacharyya': cv2.HISTCMP_BHATTACHARYYA
     }
+    if not method in methods.keys(): 
+        raise ValueError(f"Invalid method: {method}")
     return cv2.compareHist(hist1, hist2, methods[method.lower()])
 
 def histogram_matching(source: np.ndarray, 
@@ -168,3 +170,16 @@ def plot_histogram_comparison(image1: np.ndarray,
     
     plt.tight_layout()
 
+def plot_histogram_with_stats(image: np.ndarray) -> None:
+    """Muestra histograma + estadísticas en un solo gráfico."""
+    hist = compute_histogram(image)
+    stats = get_histogram_stats(hist)
+    
+    fig, ax = plt.subplots(figsize=(12, 5))
+    plot_histogram(hist, ax=ax)
+    
+    # Añadir anotaciones
+    for stat, value in stats.items():
+        ax.annotate(f"{stat}: {value:.2f}", 
+                    xy=(0.7, 0.85 - list(stats.keys()).index(stat)*0.05),
+                    xycoords='axes fraction') 
