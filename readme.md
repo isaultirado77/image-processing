@@ -1,9 +1,5 @@
 # **ImgProcTools** - Biblioteca de Procesamiento de Imágenes en Python
 
-#![OpenCV](https://img.shields.io/badge/OpenCV-5.0+-green.svg)
-#![Python](https://img.shields.io/badge/Python-3.7+-blue.svg)
-#[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
 **ImgProcTools** es una biblioteca Python diseñada para proporcionar herramientas esenciales de procesamiento de imágenes, construida sobre OpenCV y NumPy. 
 
 **Nota**: Este proyecto documenta mi proceso de aprendizaje en el campo del procesamiento de imágenes utilizando OpenCV, así como mi evolución en el desarrollo de software con Python. Ha sido concebido principalmente como una herramienta educativa y de autoevaluación, en la que he aplicado conceptos fundamentales de procesamiento de imagenes y buenas prácticas. Si bien puede resultar útil para otros, su propósito principal ha sido didáctico y personal.
